@@ -1,7 +1,5 @@
 FROM alpine:3.6
-LABEL maintainer "h-mineta <h-mineta@0nyx.net>"
-
-ENV DOCKER="YES"
+LABEL maintainer "KOBA789 <kobahide789@gmail.com>"
 
 RUN set -x \
 	&& apk upgrade --update \
@@ -30,18 +28,21 @@ RUN set -x \
 		eudev-dev \
 		libevent-dev \
 		pcsc-lite-dev \
+		linux-headers \
 		libusb-dev \
 	\
 	&& npm install pm2 -g \
 	\
 	&& npm install arib-b25-stream-test -g --unsafe \
 	\
-	# mirakurun
-	&& npm install mirakurun@latest -g --unsafe --production \
+	&& touch /usr/local/bin/update-rc.d ; chmod a+x /usr/local/bin/update-rc.d \
+	&& npm install mirakurun -g --unsafe --production \
+	&& mkdir -p /usr/local/share/mirakurun \
 	\
-	# recpt1
-	&& git clone https://github.com/stz2012/recpt1 /tmp/recpt1 \
-	&& cd /tmp/recpt1/recpt1 \
+	# recdvb
+	&& git clone https://github.com/mzyy94/recdvb /tmp/recdvb \
+	&& cd /tmp/recdvb \
+	&& chmod +x ./autogen.sh \
 	&& ./autogen.sh \
 	&& ./configure \
 	&& sed -i '/#include <sys\/msg.h>/d' recpt1core.h \
@@ -74,6 +75,9 @@ RUN set -x \
 	#&& ln -sf /dev/stderr /usr/local/var/log/mirakurun.stderr-0.log
 
 COPY services.sh /usr/local/bin
+COPY conf/channels.yml /usr/local/share/mirakurun/
+COPY conf/server.yml /usr/local/share/mirakurun/
+COPY conf/tuners.yml /usr/local/share/mirakurun/
 
 WORKDIR /usr/lib/node_modules/mirakurun
 CMD ["/usr/local/bin/services.sh"]
