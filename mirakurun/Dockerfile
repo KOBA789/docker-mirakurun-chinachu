@@ -75,9 +75,9 @@ RUN set -x \
 	#&& ln -sf /dev/stderr /usr/local/var/log/mirakurun.stderr-0.log
 
 COPY services.sh /usr/local/bin
-COPY conf/channels.yml /usr/local/share/mirakurun/
-COPY conf/server.yml /usr/local/share/mirakurun/
-COPY conf/tuners.yml /usr/local/share/mirakurun/
+COPY conf/channels.yml /usr/local/etc/mirakurun/
+COPY conf/server.yml /usr/local/etc/mirakurun/
+COPY conf/tuners.yml /usr/local/etc/mirakurun/
 
 WORKDIR /usr/lib/node_modules/mirakurun
 CMD ["/usr/local/bin/services.sh"]
