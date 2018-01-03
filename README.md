@@ -1,7 +1,6 @@
-# Mirakurun on k8s
+# Mirakurun on Docker
 
-## Constitution
-### Mirakurun
+## Mirakurun
 - Alpine Linux 3.6
 - [Mirakurun](https://github.com/kanreisa/Mirakurun)
   - branch: master
