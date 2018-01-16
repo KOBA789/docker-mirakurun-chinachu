@@ -2,5 +2,5 @@ pipeline:
   docker:
     image: plugins/docker
     repo: mirakurun
-    registry: registry.k789.pw
+    registry: registry.koba789.com
     tags: latest
